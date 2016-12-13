@@ -1,5 +1,6 @@
 package com.example.ntemfacg.toss5;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -35,6 +36,12 @@ public class MainActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    private static final int request_accelerometer = 1234;
+
+    public void startAccelerometer(View v) {
+        Intent aIntent = new Intent(this, Accelerometer.class);
+        startActivityForResult(aIntent, request_accelerometer);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

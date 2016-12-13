@@ -1,8 +1,8 @@
 package com.example.ntemfacg.toss5;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -13,24 +13,21 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Build;
+import android.os.PowerManager;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.view.Display;
-import android.view.LayoutInflater;
+import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
-import static android.content.Context.SENSOR_SERVICE;
-
-/**
- * Created by pheon on 11/12/2016.
- */
-public class TossGround extends Fragment implements SensorEventListener {
+public class Accelerometer extends Activity implements SensorEventListener{
 
     CustomDrawableView mCustomDrawableView = null;
     ShapeDrawable mDrawable = new ShapeDrawable();
@@ -43,39 +40,28 @@ public class TossGround extends Fragment implements SensorEventListener {
     public float frameTime = 0.400f;
 
     /** Called when the activity is first created. */
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        //getActivity().requestWindowFeature(Window.FEATURE_ACTION_BAR);
-        //getActivity().getWindow().setLayout(WindowManager.LayoutParams.FILL_PARENT, WindowManager.LayoutParams.FILL_PARENT);
-        //getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        View rootView = inflater.inflate(R.layout.fragment_toss_ground, container, false);
-        FrameLayout relativeLayout = (FrameLayout) rootView.findViewById(R.id.toss_ground);
-        relativeLayout.addView(new CustomDrawableView(getActivity()));
-        return rootView;
-    }
-
-    @Override
-    public void onStart()
+    public void onCreate(Bundle savedInstanceState)
     {
 
-        super.onStart();
+        super.onCreate(savedInstanceState);
 
         //Set FullScreen & portrait
-
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         // Get a reference to a SensorManager
-        sensorManager = (SensorManager)getActivity().getSystemService(SENSOR_SERVICE);
+        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION),
                 SensorManager.SENSOR_DELAY_GAME);
 
-        mCustomDrawableView = new CustomDrawableView(getActivity());
-        //setContentView(mCustomDrawableView);
+        mCustomDrawableView = new CustomDrawableView(this);
+        setContentView(mCustomDrawableView);
         // setContentView(R.layout.main);
 
         //Calculate Boundry
-        Display display = getActivity().getWindowManager().getDefaultDisplay();
+        Display display = getWindowManager().getDefaultDisplay();
         xmax = (float)display.getWidth() - 200;
         ymax = (float)display.getHeight() - 200;
     }
@@ -128,15 +114,15 @@ public class TossGround extends Fragment implements SensorEventListener {
     }
 
     @Override
-    public void onResume()
+    protected void onResume()
     {
         super.onResume();
         sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION),
-                SensorManager.SENSOR_DELAY_NORMAL);
+                SensorManager.SENSOR_DELAY_GAME);
     }
 
     @Override
-    public void onStop()
+    protected void onStop()
     {
         // Unregister the listener
         sensorManager.unregisterListener(this);
@@ -168,8 +154,6 @@ public class TossGround extends Fragment implements SensorEventListener {
     public void onConfigurationChanged(Configuration newConfig) {
         // TODO Auto-generated method stub
         super.onConfigurationChanged(newConfig);
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 }
-
-

@@ -62,8 +62,8 @@ public class Accelerometer extends Activity implements SensorEventListener{
 
         //Calculate Boundry
         Display display = getWindowManager().getDefaultDisplay();
-        xmax = (float)display.getWidth() - 200;
-        ymax = (float)display.getHeight() - 200;
+        xmax = (float)display.getWidth() - 250;
+        ymax = (float)display.getHeight() - 250;
     }
 
     // This method will update the UI on new sensor events
@@ -135,7 +135,7 @@ public class Accelerometer extends Activity implements SensorEventListener{
         {
             super(context);
             Bitmap ball = BitmapFactory.decodeResource(getResources(), R.drawable.six);
-            final int maxSize = 200;
+            final int maxSize = 250;
             mBitmap = Bitmap.createScaledBitmap(ball, maxSize, maxSize, true);
             mWood = BitmapFactory.decodeResource(getResources(), R.drawable.wood);
 

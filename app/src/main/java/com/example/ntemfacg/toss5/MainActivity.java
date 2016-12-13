@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private ViewPager mViewPager;
     private static final int request_accelerometer = 1234;
+    private static final int REQUEST_LOGIN = 4567;
 
     public void startAccelerometer(View v) {
         Intent aIntent = new Intent(this, Accelerometer.class);
@@ -87,12 +88,21 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.login:
+                startLogin();
+                return true;
+            case R.id.action_settings:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
+    }
 
-        return super.onOptionsItemSelected(item);
+    private void startLogin(){
+        Intent intentEdit = new Intent(this, LoginActivity.class);
+        startActivityForResult(intentEdit, REQUEST_LOGIN);
+
     }
 
 

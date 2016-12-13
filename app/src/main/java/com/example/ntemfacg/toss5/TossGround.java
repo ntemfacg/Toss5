@@ -48,8 +48,8 @@ public class TossGround extends Fragment implements SensorEventListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         //getActivity().requestWindowFeature(Window.FEATURE_ACTION_BAR);
-        //getActivity().getWindow().setLayout(WindowManager.LayoutParams.FILL_PARENT, WindowManager.LayoutParams.FILL_PARENT);
-        //getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        getActivity().getWindow().setLayout(WindowManager.LayoutParams.FILL_PARENT, WindowManager.LayoutParams.FILL_PARENT);
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         View rootView = inflater.inflate(R.layout.fragment_toss_ground, container, false);
         FrameLayout relativeLayout = (FrameLayout) rootView.findViewById(R.id.toss_ground);
         relativeLayout.addView(new CustomDrawableView(getActivity()));
@@ -76,8 +76,8 @@ public class TossGround extends Fragment implements SensorEventListener {
 
         //Calculate Boundry
         Display display = getActivity().getWindowManager().getDefaultDisplay();
-        xmax = (float)display.getWidth() - 200;
-        ymax = (float)display.getHeight() - 200;
+        xmax = (float)display.getWidth() - 250;
+        ymax = (float)display.getHeight() - 250;
     }
 
     // This method will update the UI on new sensor events
@@ -111,13 +111,17 @@ public class TossGround extends Fragment implements SensorEventListener {
 
         if (xPosition > xmax) {
             xPosition = xmax;
+            xVelocity = 0;
         } else if (xPosition < 0) {
             xPosition = 0;
+            xVelocity = 0;
         }
         if (yPosition > ymax) {
             yPosition = ymax;
+            yVelocity = 0;
         } else if (yPosition < 0) {
             yPosition = 0;
+            yVelocity = 0;
         }
     }
 
@@ -143,13 +147,13 @@ public class TossGround extends Fragment implements SensorEventListener {
         super.onStop();
     }
 
-    public class CustomDrawableView extends View
+    private class CustomDrawableView extends View
     {
         public CustomDrawableView(Context context)
         {
             super(context);
             Bitmap ball = BitmapFactory.decodeResource(getResources(), R.drawable.six);
-            final int maxSize = 200;
+            final int maxSize = 250;
             mBitmap = Bitmap.createScaledBitmap(ball, maxSize, maxSize, true);
             mWood = BitmapFactory.decodeResource(getResources(), R.drawable.wood);
 

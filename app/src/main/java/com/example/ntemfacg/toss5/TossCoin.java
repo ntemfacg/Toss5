@@ -71,8 +71,8 @@ public class TossCoin extends Fragment implements SensorEventListener{
 
         //Calculate Boundry
         Display display = getActivity().getWindowManager().getDefaultDisplay();
-        xmax = (float)display.getWidth() - 200;
-        ymax = (float)display.getHeight() - 200;
+        xmax = (float)display.getWidth() - 300;
+        ymax = (float)display.getHeight() - 300;
     }
 
     // This method will update the UI on new sensor events
@@ -106,13 +106,17 @@ public class TossCoin extends Fragment implements SensorEventListener{
 
         if (xPosition > xmax) {
             xPosition = xmax;
+            xVelocity = 0;
         } else if (xPosition < 0) {
             xPosition = 0;
+            xVelocity = 0;
         }
         if (yPosition > ymax) {
             yPosition = ymax;
+            yVelocity = 0;
         } else if (yPosition < 0) {
             yPosition = 0;
+            yVelocity = 0;
         }
     }
 
@@ -143,8 +147,8 @@ public class TossCoin extends Fragment implements SensorEventListener{
         public CustomDrawableView(Context context)
         {
             super(context);
-            Bitmap ball = BitmapFactory.decodeResource(getResources(), R.drawable.quarter_head);
-            final int maxSize = 200;
+            Bitmap ball = BitmapFactory.decodeResource(getResources(), R.mipmap.heads);
+            final int maxSize = 300;
             mBitmap = Bitmap.createScaledBitmap(ball, maxSize, maxSize, true);
             mWood = BitmapFactory.decodeResource(getResources(), R.drawable.sky);
 

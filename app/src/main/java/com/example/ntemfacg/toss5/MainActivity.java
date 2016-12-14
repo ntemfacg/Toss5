@@ -39,10 +39,14 @@ public class MainActivity extends AppCompatActivity {
     private static final int request_accelerometer = 1234;
     private static final int REQUEST_LOGIN = 4567;
 
-    public void startAccelerometer(View v) {
+    public void startAccelerometer() {
         Intent aIntent = new Intent(this, Accelerometer.class);
         startActivityForResult(aIntent, request_accelerometer);
     }
+    public void onReturnClick(View v){
+        finish();
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,10 +93,14 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         switch (id) {
-            case R.id.login:
+            case R.id.bounce:
                 startLogin();
                 return true;
             case R.id.action_settings:
+                startAbout();
+                return true;
+            case R.id.accelerometer:
+                startAccelerometer();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -100,9 +108,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startLogin(){
-        Intent intentEdit = new Intent(this, LoginActivity.class);
+        Intent intentEdit = new Intent(this, Bounce.class);
         startActivityForResult(intentEdit, REQUEST_LOGIN);
 
+    }
+    private void startAbout(){
+        Intent intentAbout = new Intent(this, About.class);
+        startActivityForResult(intentAbout, REQUEST_LOGIN);
     }
 
 
@@ -147,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
                 case 1:
                     return "TOSS COIN";
                 case 2:
-                    return "HISTORY";
+                    return "PAINT";
             }
             return null;
         }
